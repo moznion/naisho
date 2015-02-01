@@ -10,8 +10,22 @@ func TestFetchPublicKeyThatExists(t *testing.T) {
 }
 
 func TestFetchPublicKeyOfNotExistsUser(t *testing.T) {
-	pubkey := FetchPublicKeyByUserName("moznion_not_exist")
+	pubkey := FetchPublicKeyByUserName("not_exist_asdfasdf")
 	if pubkey != "" {
+		t.Error("Something received!")
+	}
+}
+
+func TestFetchEmailAddressThatExists(t *testing.T) {
+	email := FetchEmailAddressByUserName("moznion")
+	if email != "moznion@gmail.com" {
+		t.Error("Failed to fetch users email")
+	}
+}
+
+func TestFetchEmailAddressOfNotExistsUser(t *testing.T) {
+	email := FetchEmailAddressByUserName("not_exist_asdfasdf")
+	if email != "" {
 		t.Error("Something received!")
 	}
 }
