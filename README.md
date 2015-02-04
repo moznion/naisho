@@ -42,8 +42,9 @@ $ openssl rsautl -decrypt -inkey <Your Secret Key> -in <Attachment>
 Note
 --
 
-This program gets ssh-rsa public keys from [https://github.com/user-id.keys](https://github.com/user-id.keys)
-and gets a target email address from [https://github.com/user-id](https://github.com/user-id)
+This program gets ssh-rsa public keys from [https://github.com/user-id.keys](https://github.com/user-id.keys), it uses the __topmost__ key.
+
+And gets a target email address from [https://github.com/user-id](https://github.com/user-id)
 
 Length of the secret message differs depending on strength of the used key.
 
