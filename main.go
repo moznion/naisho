@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -52,7 +53,7 @@ Options:
 
 	args := flag.Args()
 
-	if len(args) != 2 {
+	if len(args) < 2 {
 		flag.Usage()
 		os.Exit(1)
 	}
@@ -83,7 +84,7 @@ Options:
 		os.Exit(1)
 	}
 
-	msg := args[1]
+	msg := strings.Join(args[1:], " ")
 	encrypted, err := encryptStringBySSHRsaPublicKey(pubkey, msg)
 	if err != nil {
 		fmt.Println(err)
