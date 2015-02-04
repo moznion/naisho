@@ -1,11 +1,61 @@
 package main
 
-import "net/smtp"
+import (
+	"fmt"
+	"io/ioutil"
+	"path/filepath"
 
-func sendByGmail(senderAddr string, senderPswd string, dstAddr string, body string) (err error) {
+	"gopkg.in/gomail.v1"
+)
+
+type mail struct {
+	fromAddr string
+	pswd     string
+	toAddr   string
+	msg      []byte
+	subject  string
+	body     string
+}
+
+func sendByGmail(m *mail) (err error) {
 	const (
 		gmailSmtpAddr = "smtp.gmail.com"
 	)
-	auth := smtp.PlainAuth("", senderAddr, senderPswd, gmailSmtpAddr)
-	return smtp.SendMail(gmailSmtpAddr+":587", auth, senderAddr, []string{dstAddr}, []byte(body))
+
+	tempfile, err := ioutil.TempFile("", "secret-")
+	if err != nil {
+		return err
+	}
+
+	tempfileName := tempfile.Name()
+	err = ioutil.WriteFile(tempfileName, m.msg, 0644)
+	if err != nil {
+		return err
+	}
+
+	subject := m.subject
+	if subject == "" {
+		subject = "Secret message"
+	}
+
+	body := m.body
+	if body == "" {
+		body = fmt.Sprintf("Please execute with attachment file to read: `openssl rsautl -decrypt -inkey <YOUR SECRET KEY> -in %s`", filepath.Base(tempfileName))
+	}
+
+	newMsg := gomail.NewMessage()
+	newMsg.SetHeader("From", m.fromAddr)
+	newMsg.SetHeader("To", m.toAddr)
+	newMsg.SetHeader("Subject", subject)
+	newMsg.SetBody("text/plain", body)
+
+	f, err := gomail.OpenFile(tempfile.Name())
+	if err != nil {
+		return err
+	}
+	newMsg.Attach(f)
+
+	smtpPort := 587
+	mailer := gomail.NewMailer(gmailSmtpAddr, m.fromAddr, m.pswd, smtpPort)
+	return mailer.Send(newMsg)
 }
