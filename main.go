@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"os/user"
 	"path/filepath"
+	"runtime"
 
 	"gopkg.in/yaml.v2"
 )
@@ -34,11 +34,13 @@ Options:
 		flag.PrintDefaults()
 	}
 
-	usr, err := user.Current()
-	if err != nil {
-		fmt.Println(err)
+	homeDir := os.Getenv("HOME")
+	if runtime.GOOS == "windows" {
+		homeDir = os.Getenv("HOMEDRIVE") + os.Getenv("HOMEPATH")
+		if homeDir == "" {
+			homeDir = os.Getenv("USERPROFILE")
+		}
 	}
-	homeDir := usr.HomeDir
 
 	opt := new(option)
 	flag.StringVar(&opt.gmailConfPath, "conf", filepath.Join(homeDir, ".naisho"), "Path for the configuration file of gmail")
