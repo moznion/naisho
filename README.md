@@ -1,4 +1,4 @@
-naisho
+naisho [![Build Status](https://travis-ci.org/moznion/naisho.svg)](https://travis-ci.org/moznion/naisho)
 ==
 
 Send short encrypted message by GitHub ID
