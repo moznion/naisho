@@ -1,7 +1,7 @@
-naisho [![Build Status](https://travis-ci.org/moznion/naisho.svg)](https://travis-ci.org/moznion/naisho)
+naisho [![Build Status](https://travis-ci.org/moznion/naisho.svg)](https://travis-ci.org/moznion/naisho) [![wercker status](https://app.wercker.com/status/16e7bca2a67cb41ec7b1ab9c4deeb2bb/s "wercker status")](https://app.wercker.com/project/bykey/16e7bca2a67cb41ec7b1ab9c4deeb2bb)
 ==
 
-Send short encrypted message by GitHub ID
+:email: :key: Send short encrypted message by GitHub ID
 
 Description
 --
