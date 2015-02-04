@@ -10,7 +10,7 @@ import (
 
 type mail struct {
 	fromAddr string
-	pswd     string
+	pass     string
 	toAddr   string
 	msg      []byte
 	subject  string
@@ -26,6 +26,7 @@ func sendByGmail(m *mail) (err error) {
 	if err != nil {
 		return err
 	}
+	defer tempfile.Close()
 
 	tempfileName := tempfile.Name()
 	err = ioutil.WriteFile(tempfileName, m.msg, 0644)
@@ -56,6 +57,6 @@ func sendByGmail(m *mail) (err error) {
 	newMsg.Attach(f)
 
 	smtpPort := 587
-	mailer := gomail.NewMailer(gmailSmtpAddr, m.fromAddr, m.pswd, smtpPort)
+	mailer := gomail.NewMailer(gmailSmtpAddr, m.fromAddr, m.pass, smtpPort)
 	return mailer.Send(newMsg)
 }

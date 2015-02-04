@@ -9,15 +9,15 @@ import (
 	"regexp"
 )
 
-func FetchPublicKeyByUserName(userName string) (string, error) {
-	res, err := http.Get("https://github.com/" + userName + ".keys")
+func fetchPublicKeyByUserId(userId string) (string, error) {
+	res, err := http.Get("https://github.com/" + userId + ".keys")
 	if err != nil {
 		return "", err
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
-		return "", errors.New(fmt.Sprintf("Failed HTTP request: %d", res.StatusCode))
+		return "", errors.New(fmt.Sprintf("Failed HTTP request to fetch a public key: %d", res.StatusCode))
 	}
 
 	body, err := ioutil.ReadAll(res.Body)
@@ -34,15 +34,15 @@ type users struct {
 	Email string `json:"email"`
 }
 
-func FetchEmailAddressByUserName(userName string) (string, error) {
-	res, err := http.Get("https://api.github.com/users/" + userName)
+func fetchEmailAddressByUserId(userId string) (string, error) {
+	res, err := http.Get("https://api.github.com/users/" + userId)
 	if err != nil {
 		return "", err
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
-		return "", errors.New(fmt.Sprintf("Failed HTTP request: %d", res.StatusCode))
+		return "", errors.New(fmt.Sprintf("Failed HTTP request to fetch an email adress: %d", res.StatusCode))
 	}
 
 	userInfo := new(users)
