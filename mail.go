@@ -19,7 +19,7 @@ type mail struct {
 
 func sendByGmail(m *mail) (err error) {
 	const (
-		gmailSmtpAddr = "smtp.gmail.com"
+		gmailSMTPAddr = "smtp.gmail.com"
 	)
 
 	tempfile, err := ioutil.TempFile("", "secret-")
@@ -57,6 +57,6 @@ func sendByGmail(m *mail) (err error) {
 	newMsg.Attach(f)
 
 	smtpPort := 587
-	mailer := gomail.NewMailer(gmailSmtpAddr, m.fromAddr, m.pass, smtpPort)
+	mailer := gomail.NewMailer(gmailSMTPAddr, m.fromAddr, m.pass, smtpPort)
 	return mailer.Send(newMsg)
 }

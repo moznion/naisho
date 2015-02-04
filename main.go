@@ -69,20 +69,20 @@ Options:
 		opt.pass = conf.Password
 	}
 
-	targetGitHubId := args[0]
-	pubkey, err := fetchPublicKeyByUserId(targetGitHubId)
+	targetGitHubID := args[0]
+	pubkey, err := fetchPublicKeyByUserID(targetGitHubID)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	toAddr, err := fetchEmailAddressByUserId(targetGitHubId)
+	toAddr, err := fetchEmailAddressByUserID(targetGitHubID)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	msg := args[1]
-	encrypted, err := encryptStringBySshRsaPublicKey(pubkey, msg)
+	encrypted, err := encryptStringBySSHRsaPublicKey(pubkey, msg)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

@@ -7,7 +7,7 @@ import (
 	"github.com/ianmcmahon/encoding_ssh"
 )
 
-func encryptStringBySshRsaPublicKey(sshRsaPubkey string, msg string) ([]byte, error) {
+func encryptStringBySSHRsaPublicKey(sshRsaPubkey string, msg string) ([]byte, error) {
 	pubkey, err := ssh.DecodePublicKey(sshRsaPubkey)
 	if err != nil {
 		return make([]byte, 0), err

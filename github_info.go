@@ -2,22 +2,21 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"regexp"
 )
 
-func fetchPublicKeyByUserId(userId string) (string, error) {
-	res, err := http.Get("https://github.com/" + userId + ".keys")
+func fetchPublicKeyByUserID(userID string) (string, error) {
+	res, err := http.Get("https://github.com/" + userID + ".keys")
 	if err != nil {
 		return "", err
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
-		return "", errors.New(fmt.Sprintf("Failed HTTP request to fetch a public key: %d", res.StatusCode))
+		return "", fmt.Errorf("Failed HTTP request to fetch a public key: %d", res.StatusCode)
 	}
 
 	body, err := ioutil.ReadAll(res.Body)
@@ -34,15 +33,15 @@ type users struct {
 	Email string `json:"email"`
 }
 
-func fetchEmailAddressByUserId(userId string) (string, error) {
-	res, err := http.Get("https://api.github.com/users/" + userId)
+func fetchEmailAddressByUserID(userID string) (string, error) {
+	res, err := http.Get("https://api.github.com/users/" + userID)
 	if err != nil {
 		return "", err
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
-		return "", errors.New(fmt.Sprintf("Failed HTTP request to fetch an email adress: %d", res.StatusCode))
+		return "", fmt.Errorf("Failed HTTP request to fetch an email adress: %d", res.StatusCode)
 	}
 
 	userInfo := new(users)
