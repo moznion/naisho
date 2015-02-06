@@ -15,7 +15,7 @@ func fetchPublicKeyByUserID(userID string) (string, error) {
 	}
 	defer res.Body.Close()
 
-	if res.StatusCode != 200 {
+	if res.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("Failed HTTP request to fetch a public key: %d", res.StatusCode)
 	}
 
@@ -40,7 +40,7 @@ func fetchEmailAddressByUserID(userID string) (string, error) {
 	}
 	defer res.Body.Close()
 
-	if res.StatusCode != 200 {
+	if res.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("Failed HTTP request to fetch an email adress: %d", res.StatusCode)
 	}
 
