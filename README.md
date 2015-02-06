@@ -36,7 +36,7 @@ with an attachment which contains encrypted message.
 When you want to read a received attachment, you just execute following command;
 
 ```
-$ openssl rsautl -decrypt -inkey <Your Secret Key> -in <Attachment>
+$ openssl rsautl -decrypt -oaep -inkey <Your Secret Key> -in <Attachment>
 ```
 
 Note

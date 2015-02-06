@@ -41,7 +41,7 @@ func sendByGmail(m *mail) (err error) {
 
 	body := m.body
 	if body == "" {
-		body = fmt.Sprintf("Please execute with attachment file to read: `openssl rsautl -decrypt -inkey <YOUR SECRET KEY> -in %s`", filepath.Base(tempfileName))
+		body = fmt.Sprintf("Please execute with attachment file to read: `openssl rsautl -decrypt -oaep -inkey <YOUR SECRET KEY> -in %s`", filepath.Base(tempfileName))
 	}
 
 	newMsg := gomail.NewMessage()
